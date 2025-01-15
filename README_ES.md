@@ -12,43 +12,66 @@
 - ☁️ Soporta múltiples modelos, incluidos Llama local, OpenAI, Anthropic, Groq y más
 - 📦 Funciona perfectamente
 
-## Usos
+## Índice
 
-- 🤖 Chatbots
-- 🕵️ Agentes autónomos
-- 📈 Gestión de procesos empresariales
-- 🎮 NPCs en videojuegos
+1. [Guía de Inicio Rápido](#gu%C3%ADa-de-inicio-r%C3%A1pido)
+2. [Personalizando a Eliza](#personalizando-a-eliza)
+3. [Ejecución con Diferentes Modelos](#ejecuci%C3%B3n-con-diferentes-modelos)
+4. [Configuración del Entorno](#configuraci%C3%B3n-del-entorno)
+5. [Configuración de Inferencia Local](#configuraci%C3%B3n-de-inferencia-local)
+6. [Clientes](#clientes)
+7. [Desarrollo](#desarrollo)
 
-# Primeros Pasos
+---
 
-**Requisitos (OBLIGATORIOS):**
+## Guía de Inicio Rápido
 
-- [Python 2.7+](https://www.python.org/downloads/)
-- [Node.js 23.3+](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm)
-- [pnpm](https://pnpm.io/installation)
+### Requisitos
 
-### Edite el archivo .env
+- Python 2.7 o superior (descargue [aquí](https://www.python.org/downloads/))
+- Node.js 23.3 o superior (descargue [aquí](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm))
+- `pnpm` (instale con `npm install -g pnpm`)
 
-- Copie el archivo .env.example a .env y complete los valores apropiados
-- Edite las variables de entorno de TWITTER para agregar nombre de usuario y contraseña del bot
+### Configuración
 
-### Edite el archivo de personaje
+1. Clone el repositorio:
+   ```bash
+   git clone https://github.com/user/eliza.git
+   cd eliza
+   ```
 
-- Revise el archivo `src/core/defaultCharacter.ts` - puede modificarlo
-- También puede cargar personajes con el comando `pnpm start --characters="path/to/your/character.json"` y ejecutar múltiples bots simultáneamente.
+2. Instale las dependencias:
+   ```bash
+   pnpm install
+   ```
 
-Después de configurar el archivo .env y el archivo de personaje, puede iniciar el bot con:
+3. Configure las variables de entorno:
+   - Copie el archivo `.env.example` a `.env`:
+     ```bash
+     cp .env.example .env
+     ```
+   - Edite `.env` y agregue sus claves API.
 
-```
-pnpm i
-pnpm start
-```
+4. Personalice el archivo del personaje:
+   - Revise y edite `src/core/defaultCharacter.ts` o cargue su archivo JSON con:
+     ```bash
+     pnpm start --characters="path/to/your/character.json"
+     ```
 
-# Personalizando a Eliza
+5. Ejecute el bot:
+   ```bash
+   pnpm start
+   ```
+
+---
+
+## Personalizando a Eliza
 
 ### Agregando acciones personalizadas
 
 Para evitar conflictos en el directorio central, se recomienda agregar acciones personalizadas a un directorio `custom_actions` y luego agregarlas al archivo `elizaConfig.yaml`. Consulte el archivo `elizaConfig.example.yaml` para un ejemplo.
+
+---
 
 ## Ejecución con Diferentes Modelos
 
@@ -64,17 +87,11 @@ Puede ejecutar modelos Grok configurando la variable de ambiente `GROK_API_KEY` 
 
 Puede ejecutar modelos OpenAI configurando la variable de ambiente `OPENAI_API_KEY` y configurando "openai" como proveedor en el archivo de caracteres.
 
-## Requisitos Adicionales
+---
 
-Puede ser necesario instalar Sharp. Si encuentra un error al iniciar, intente instalarlo con:
+## Configuración del Entorno
 
-```
-pnpm install --include=optional sharp
-```
-
-# Configuración del Entorno
-
-Deberá agregar variables de ambiente a su archivo .env para conectarse a varias plataformas:
+Deberá agregar variables de ambiente a su archivo `.env` para conectarse a varias plataformas:
 
 ```
 # Variables de ambiente obligatorias
@@ -109,30 +126,21 @@ EVM_PRIVATE_KEY=EXAMPLE_WALLET_PRIVATE_KEY
 SOLANA_PRIVATE_KEY=EXAMPLE_WALLET_PRIVATE_KEY
 SOLANA_PUBLIC_KEY=EXAMPLE_WALLET_PUBLIC_KEY
 
-# Fallback Wallet Configuration (deprecated)
-WALLET_PRIVATE_KEY=EXAMPLE_WALLET_PRIVATE_KEY
-WALLET_PUBLIC_KEY=EXAMPLE_WALLET_PUBLIC_KEY
-
-BIRDEYE_API_KEY=
-
-SOL_ADDRESS=So11111111111111111111111111111111111111112
-SLIPPAGE=1
-SOLANA_RPC_URL=https://api.mainnet-beta.solana.com
-HELIUS_API_KEY=
-
-## Telegram
+# Telegram
 TELEGRAM_BOT_TOKEN=
 
 TOGETHER_API_KEY=
 ```
 
-# Configuración de Inferencia Local
+---
+
+## Configuración de Inferencia Local
 
 ### Configuración CUDA
 
 Si tiene una GPU NVIDIA, puede instalar CUDA para acelerar significativamente la inferencia local.
 
-```
+```bash
 pnpm install
 npx --no node-llama-cpp source download --gpu cuda
 ```
@@ -141,17 +149,21 @@ Asegúrese de tener instalado el CUDA Toolkit, incluyendo cuDNN y cuBLAS.
 
 ### Ejecución local
 
-Agregue XAI_MODEL y configúrelo con una de las opciones de [Ejecutar con Llama](#ejecutar-con-llama) - puede dejar XAI_API_KEY en blanco, descargará el modelo de HuggingFace y realizará consultas localmente
+Agregue `XAI_MODEL` y configúrelo con una de las opciones de [Ejecutar con Llama](#ejecutar-con-llama) - puede dejar `XAI_API_KEY` en blanco, descargará el modelo de HuggingFace y realizará consultas localmente.
 
-# Clientes
+---
 
-## Bot de Discord
+## Clientes
 
-Para ayuda con la configuración de su Bot de Discord, consulte: https://discordjs.guide/preparations/setting-up-a-bot-application.html
+### Bot de Discord
 
-# Desarrollo
+Para ayuda con la configuración de su Bot de Discord, consulte: [Guía de Discord.js](https://discordjs.guide/preparations/setting-up-a-bot-application.html).
 
-## Pruebas
+---
+
+## Desarrollo
+
+### Pruebas
 
 Para ejecutar la suite de pruebas:
 
@@ -172,6 +184,6 @@ Las pruebas están escritas con Jest y se pueden encontrar en archivos `src/**/*
 - Cargar variables de ambiente desde `.env.test`
 - Usar un límite de 2 minutos para pruebas de larga duración
 - Soportar módulos ESM
-- Ejecutar pruebas en secuencia (--runInBand)
+- Ejecutar pruebas en secuencia (`--runInBand`)
 
 Para crear nuevas pruebas, agregue un archivo `.test.ts` junto al código que está probando.
